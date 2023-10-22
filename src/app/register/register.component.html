@@ -1,0 +1,61 @@
+
+<section class="text-center text-lg-start">
+
+  <div class="container py-5">
+    <div class="row g-0 align-items-center">
+      <div class="col-lg-6 mb-5 mb-lg-0">
+        <div class="card cascading-right" style="
+            background: hsla(0, 0%, 100%, 0.55);
+            backdrop-filter: blur(30px);
+            ">
+          <div class="card-body p-4 shadow-5 text-center">
+            <h2 class="fw-bold mb-5">Sign up now</h2>
+            <form (ngSubmit)="register()" [formGroup]="userForm">
+              <div class="form-outline mb-2">
+                <input type="text" id="username" name="username" formControlName="username" class="form-control">
+                <label for="username">Username <span class="text-danger">*</span></label>
+                <small class="text-danger d-block"
+                  *ngIf="formSubmitted && userForm.get('username')?.hasError('required')">Username is
+                  required.</small>
+              </div>
+              <div class="form-outline mb-2">
+                <input type="email" id="email" name="email" formControlName="email" class="form-control">
+                <label for="email">Email <span class="text-danger">*</span></label>
+                <small class="text-danger d-block"
+                  *ngIf="formSubmitted && userForm.get('email')?.hasError('required')">Email is
+                  required.</small>
+                <small class="text-danger d-block"
+                  *ngIf="formSubmitted && userForm.get('email')?.hasError('pattern')">Invalid email
+                  format.</small>
+              </div>
+              <div class="form-outline mb-2">
+                <input type="password" id="password" name="password" formControlName="password" class="form-control">
+                <label for="password">Password <span class="text-danger">*</span></label>
+                <small class="text-danger d-block"
+                  *ngIf="formSubmitted && userForm.get('password')?.hasError('required')">Password is
+                  required.</small>
+              </div>
+              <div class="form-outline mb-2 w-100">
+                <p-dropdown [options]="roleOptions" formControlName="role"></p-dropdown>
+                <label for="role">Role <span class="text-danger">*</span></label>
+                <small class="text-danger d-block"
+                  *ngIf="formSubmitted && userForm.get('role')?.hasError('required')">Role is
+                  required.</small>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block mb-4">Sign up</button>
+              <div class="w-100 d-flex justify-content-center">
+                <p class="small fw-bold mt-2 pt-1 mb-0">I have Already an account? <a href="#!" class="link-danger"
+                    routerLink="/login">Login</a></p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 mb-5 mb-lg-0">
+        <img src="/assets/images/register.jpg" class="w-100 rounded-4 shadow-4" alt="" />
+      </div>
+    </div>
+  </div>
+
+</section>

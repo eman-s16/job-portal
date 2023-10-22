@@ -1,0 +1,15 @@
+.textcontent{
+  width:49% !important;
+}
+
+@media (max-width: 996px)
+{
+  .textcontent {
+      width: 100% !important;
+    }
+}
+
+section {
+  background-color: #eee;
+  margin-top: 20px;
+}

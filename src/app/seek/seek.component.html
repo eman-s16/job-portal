@@ -1,0 +1,122 @@
+<div>
+  <app-nav></app-nav>
+  <section>
+    <div class="templateux-section pb-0 ">
+      <div class="container py-5">
+        <div class="row">
+          <div class="col">
+            <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-3">
+              <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+
+                <li class="breadcrumb-item active" aria-current="page">Job Seeker</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+
+        <div class="d-flex mb-2 justify-content-between align-items-center">
+          <div>
+            <button pButton pRipple (click)="createNewJob()" class="mb-2">List of Applied Jobs</button>
+          </div>
+          <div class="d-flex justify-content-between align-items-center">
+            <button pButton pRipple (click)="toggleSortDirection()" class="btn btn-primary me-3">
+              {{ sortDirection === 'asc' ? 'Sort Ascending' : 'Sort Descending' }}
+            </button>
+            <div>
+              <span class="p-float-label">
+                <input pInputText id="filter" [(ngModel)]="filterText" class="form-control" />
+                <label htmlFor="username">Filter by job title</label>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="row gap-3 justify-content-between">
+          <div class="card  p-3 textcontent col-sm-12 " *ngFor="let employee of pagedEmployees">
+            <div class="d-flex align-items-center  justify-content-between">
+              <div class="d-flex">
+                <div class="card-imgs " style="margin-right: 20px;">
+                  <img src="{{employee.image}}" class="img-fluid object-fit-cover" width="140" height="140" alt="..."
+                    class="border rounded-1">
+
+                </div>
+                <div class="card-text">
+                  <h3>{{employee.title}}</h3>
+                  <h6><i class="bi bi-building"></i> {{employee.company}}</h6>
+                  <span><i class="bi bi-geo-alt-fill"></i> {{employee.location}}</span>
+                  <p class="text-secondary m-0">{{employee.description}}</p>
+
+                  <span class="me-3"><i class="bi bi-clock"></i> {{calculateDaysSincePublished(employee.publishedDate)}}
+                    Days
+                    ago</span>
+                  <span class="me-3">
+                    <i *ngIf="employee.gender === 'male' || employee.gender === 'both'"
+                      class="bi bi-person-standing"></i>
+                    <i *ngIf="employee.gender === 'female' || employee.gender === 'both'"
+                      class="bi bi-person-standing-dress"></i>
+                    {{ employee.numOfReq }}
+                  </span>
+                  <span><i class="bi bi-coin"></i> {{employee.salary}} $</span>
+                  <div class="parag">
+
+                    <div class="mt-2">
+
+                            <button pButton pRipple class="btn text-center px-5" [ngClass]="{ 'btn-success': !isJobApplied(employee), 'btn-danger': isJobApplied(employee) }"
+                              (click)="toggleJobApplicationStatus(employee)">
+                              {{ isJobApplied(employee) ? 'Remove' : 'Apply' }}
+                            </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-text2 ms-5     justify-content-end">
+
+                <h4>Job Details</h4>
+                <ul>
+                  <li><strong>Requirements:</strong></li>
+                  <li *ngFor="let requirement of employee.requirements">{{ requirement }}</li>
+                </ul>
+                <h6><strong>Deadline Date:</strong> {{ employee.deadlineDate }}</h6>
+                <h6><strong>Contact Email:</strong> {{ employee.contactEmail }}</h6>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <ul class="pagination justify-content-center mt-3">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item" *ngFor="let page of pagesArray" [class.active]="currentPage === page">
+            <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === totalPages()">
+            <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <p-dialog header="List of Applied Jobs" [(visible)]="showDialog" [modal]="true" [responsive]="true"
+      [baseZIndex]="10000" [style]="{ width: '40vw' }">
+
+<div *ngIf="appliedJobs.length > 0; else noJobsCaption">
+  <ul>
+    <li *ngFor="let job of appliedJobs" class="card p-2 mb-2">
+      <h5><span class="text-primary">Title:</span> {{ job.title }}</h5>
+      <h6><span class="text-primary">Company:</span> {{ job.company }}</h6>
+      <h6><span class="text-primary">Applied on:</span> {{ job.appliedDate | date: 'short' }}</h6>
+    </li>
+  </ul>
+</div>
+<ng-template #noJobsCaption>
+  <p class="text-secondary">No jobs have been applied to yet.</p>
+</ng-template>
+    </p-dialog>
+  </section>
+</div>

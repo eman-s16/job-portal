@@ -1,0 +1,56 @@
+<div class="container">
+  <section class=" text-center text-lg-start d-flex align-items-center justify-content-center " style=" height: 100vh;">
+
+    <div class="card  ">
+      <div class="row g-0 d-flex align-items-center">
+        <div class="col-lg-4 d-none d-lg-flex">
+          <img
+            src="https://www.swiss.com/content/dam/lx/images/pixels_variations/c-632144891-3125212.jpg.transform/lh-dcep-transform-width-1440/img.jpg"
+            alt="..." class="myimg img-fluid object-fit-cover rounded-t-5 rounded-tr-lg-0 rounded-bl-lg-5" />
+        </div>
+        <div class="col-lg-8">
+          <div class="w-100 d-flex justify-content-center ">
+            <img src="/assets/images/login.png" class="img-fluid my-imgLogin" alt="..." />
+          </div>
+          <div class="card-body  px-md-5">
+
+            <form (ngSubmit)="login()" [formGroup]="loginForm">
+              <!-- Username input -->
+              <div class="form-outline mb-4">
+                <input type="text" id="username" name="username" formControlName="username" class="form-control">
+                <label class="form-label" for="username">Username</label>
+                <small class="text-danger d-block"
+                  *ngIf="formSubmitted && loginForm.get('username')?.hasError('required')">Username is
+                  required.</small>
+              </div>
+
+              <!-- Password input -->
+              <div class="form-outline mb-4">
+                <input type="password" id="password" name="password" formControlName="password" class="form-control">
+                <label class="form-label" for="password">Password</label>
+                <small class="text-danger d-block"
+                  *ngIf="formSubmitted && loginForm.get('password')?.hasError('required')">Password is
+                  required.</small>
+              </div>
+
+              <div class="w-100 d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary btn-block mb-2 px-5 fs-4">Sign in</button>
+              </div>
+              <div class="w-100 d-flex justify-content-center">
+                <p class="small fw-bold mt-2 pt-1 mb-0 text-danger" *ngIf="loginFailed">Login failed. Please check your
+                  credentials.</p>
+              </div>
+              <div class="w-100 d-flex justify-content-center">
+                <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="#!" class="link-danger"
+                    routerLink="/register">Register</a></p>
+              </div>
+            </form>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
